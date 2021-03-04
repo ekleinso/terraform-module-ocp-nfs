@@ -50,6 +50,7 @@ metadata:
   labels:
     app: nfs-provisioner
   name: nfs-provisioner
+  namespace: ${project}
 ---
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
@@ -99,6 +100,7 @@ metadata:
   labels:
     app: nfs-provisioner
   name: leader-locking-nfs-provisioner
+  namespace: ${project}
 rules:
   - apiGroups: [""]
     resources: ["endpoints"]
@@ -110,6 +112,7 @@ metadata:
   labels:
     app: nfs-provisioner
   name: leader-locking-nfs-provisioner
+  namespace: ${project}
 subjects:
   - kind: ServiceAccount
     name: nfs-provisioner
@@ -125,6 +128,7 @@ metadata:
   name: nfs-provisioner
   labels:
     app: nfs-provisioner
+  namespace: ${project}
 spec:
   ports:
     - name: nfs
@@ -166,6 +170,7 @@ metadata:
   name: nfs-provisioner
   labels:
     app: nfs-provisioner
+  namespace: ${project}
 spec:
   accessModes:
     - ReadWriteOnce
@@ -178,6 +183,7 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
   name: nfs-provisioner
+  namespace: ${project}
 spec:
   selector:
     matchLabels:

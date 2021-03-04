@@ -28,7 +28,7 @@ resource "null_resource" "ocp_nfs" {
 set -ex
 
 CURRENT_DEFAULT=`binaries/oc get sc | grep default | awk '{print $1}'`
-if [ "${var.is_default_class}" == "true" && -n "$CURRENT_DEFAULT" ]; then
+if [[ "${var.is_default_class}" == "true" && -n "$CURRENT_DEFAULT" ]]; then
   binaries/oc annotate sc/$CURRENT_DEFAULT storageclass.kubernetes.io/is-default-class-
 fi
 
