@@ -27,6 +27,11 @@ resource "null_resource" "ocp_nfs" {
     command = <<EOF
 set -ex
 
+CURRENT_DEFAULT=`binaries/oc get sc | grep default | awk '{print $1}'`
+if [ "${var.is_default_class}" == "true" && -n "$CURRENT_DEFAULT" ]; then
+  binaries/oc annotate sc/$CURRENT_DEFAULT storageclass.kubernetes.io/is-default-class-
+fi
+
 binaries/oc apply -f ${local_file.k8s_storage_yaml.filename}
 binaries/oc project ${local.project}
 binaries/oc adm policy add-scc-to-user ${var.cluster_id}-nfs-provisioner -z nfs-provisioner
